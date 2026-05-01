@@ -70,6 +70,29 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
                 <Text style={styles.settingsBtnText}>⚙ Settings</Text>
               </TouchableOpacity>
             </View>
+            <View style={styles.secondaryActions}>
+              <TouchableOpacity
+                style={styles.secondaryBtn}
+                onPress={() => navigation.navigate('Explore')}
+                activeOpacity={0.85}
+              >
+                <Text style={styles.secondaryBtnText}>Explore</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.secondaryBtn}
+                onPress={() => navigation.navigate('Profile')}
+                activeOpacity={0.85}
+              >
+                <Text style={styles.secondaryBtnText}>Profile</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.secondaryBtn}
+                onPress={() => navigation.navigate('About')}
+                activeOpacity={0.85}
+              >
+                <Text style={styles.secondaryBtnText}>About</Text>
+              </TouchableOpacity>
+            </View>
           </View>
 
           {isWide && (
@@ -269,6 +292,17 @@ const styles = StyleSheet.create({
     paddingVertical: 12, paddingHorizontal: 16, borderRadius: 10,
   },
   settingsBtnText: { color: C.muted, fontSize: 13, fontWeight: '600' as const },
+
+  secondaryActions: {
+    flexDirection: 'row' as const, flexWrap: 'wrap' as const, gap: 10, marginTop: 16,
+    width: '100%' as const,
+  },
+  secondaryBtn: {
+    backgroundColor: C.surface,
+    borderWidth: 1, borderColor: C.border,
+    paddingVertical: 10, paddingHorizontal: 16, borderRadius: 10,
+  },
+  secondaryBtnText: { color: C.cyan, fontSize: 13, fontWeight: '700' as const },
 
   heroImageWrap: {
     flex: 1, maxWidth: 460, borderRadius: 16,

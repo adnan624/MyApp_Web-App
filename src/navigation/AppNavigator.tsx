@@ -3,19 +3,26 @@ import { Platform, StatusBar } from 'react-native';
 import { NavigationContainer, LinkingOptions } from '@react-navigation/native';
 import { createNativeStackNavigator, NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../types/navigation';
+import { LINKING_PREFIXES } from '../config/linking';
 import HomeScreen from '../screens/HomeScreen';
 import FormScreen from '../screens/FormScreen';
 import SettingsScreen from '../screens/SettingsScreen';
+import ExploreScreen from '../screens/ExploreScreen';
+import ProfileScreen from '../screens/ProfileScreen';
+import AboutScreen from '../screens/AboutScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const linking: LinkingOptions<RootStackParamList> = {
-  prefixes: ['myapp://', 'http://localhost:3000'],
+  prefixes: LINKING_PREFIXES,
   config: {
     screens: {
       Home: '',
       Form: 'form',
       Settings: 'settings',
+      Explore: 'explore',
+      Profile: 'profile',
+      About: 'about',
     },
   },
 };
@@ -50,6 +57,21 @@ const AppNavigator: React.FC = () => {
             name="Settings"
             component={SettingsScreen}
             options={{ title: 'MyApp — Settings' }}
+          />
+          <Stack.Screen
+            name="Explore"
+            component={ExploreScreen}
+            options={{ title: 'MyApp — Explore' }}
+          />
+          <Stack.Screen
+            name="Profile"
+            component={ProfileScreen}
+            options={{ title: 'MyApp — Profile' }}
+          />
+          <Stack.Screen
+            name="About"
+            component={AboutScreen}
+            options={{ title: 'MyApp — About' }}
           />
         </Stack.Navigator>
       </NavigationContainer>
