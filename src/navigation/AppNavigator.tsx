@@ -5,6 +5,7 @@ import { createNativeStackNavigator, NativeStackNavigationOptions } from '@react
 import { RootStackParamList } from '../types/navigation';
 import HomeScreen from '../screens/HomeScreen';
 import FormScreen from '../screens/FormScreen';
+import SettingsScreen from '../screens/SettingsScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -14,6 +15,7 @@ const linking: LinkingOptions<RootStackParamList> = {
     screens: {
       Home: '',
       Form: 'form',
+      Settings: 'settings',
     },
   },
 };
@@ -43,6 +45,11 @@ const AppNavigator: React.FC = () => {
             name="Form"
             component={FormScreen}
             options={{ title: 'MyApp — Form Demo' }}
+          />
+          <Stack.Screen
+            name="Settings"
+            component={SettingsScreen}
+            options={{ title: 'MyApp — Settings' }}
           />
         </Stack.Navigator>
       </NavigationContainer>

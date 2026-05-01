@@ -62,6 +62,13 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
                   {PLATFORM_EMOJI[Platform.OS as PlatformKey]}  {Platform.OS}
                 </Text>
               </View>
+              <TouchableOpacity
+                style={styles.settingsBtn}
+                onPress={() => navigation.navigate('Settings')}
+                activeOpacity={0.85}
+              >
+                <Text style={styles.settingsBtnText}>⚙ Settings</Text>
+              </TouchableOpacity>
             </View>
           </View>
 
@@ -256,6 +263,12 @@ const styles = StyleSheet.create({
     paddingVertical: 12, paddingHorizontal: 16, borderRadius: 10,
   },
   platformPillText: { color: C.white, fontSize: 13, fontWeight: '600' as const },
+
+  settingsBtn: {
+    backgroundColor: C.surfaceHi, borderWidth: 1, borderColor: C.border,
+    paddingVertical: 12, paddingHorizontal: 16, borderRadius: 10,
+  },
+  settingsBtnText: { color: C.muted, fontSize: 13, fontWeight: '600' as const },
 
   heroImageWrap: {
     flex: 1, maxWidth: 460, borderRadius: 16,

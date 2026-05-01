@@ -4,8 +4,10 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 export type RootStackParamList = {
   Home: undefined;
   Form: undefined;
+  Settings: undefined;
 };
 
 // Per-screen prop types
 export type HomeScreenProps = NativeStackScreenProps<RootStackParamList, 'Home'>;
 export type FormScreenProps = NativeStackScreenProps<RootStackParamList, 'Form'>;
+export type SettingsScreenProps = NativeStackScreenProps<RootStackParamList, 'Settings'>;
