@@ -6,6 +6,7 @@ import {
 } from 'react-native';
 import type { FormScreenProps } from '../types/navigation';
 import showPlatformAlert from '../components/PlatformAlert';
+import { palette as C } from '../theme/colors';
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -32,19 +33,6 @@ interface FieldProps extends TextInputProps {
 type PlatformKey = 'ios' | 'android' | 'web';
 
 // ── Constants ─────────────────────────────────────────────────────────────────
-
-const C = {
-  bg:        '#07090f',
-  surface:   '#0e1420',
-  surfaceHi: '#151d2e',
-  border:    '#1e2d45',
-  cyan:      '#06b6d4',
-  white:     '#f0f6ff',
-  muted:     '#64748b',
-  error:     '#f87171',
-  errorBg:   '#1c0a0a',
-  green:     '#34d399',
-} as const;
 
 const INITIAL: FormState = { name: '', email: '', message: '' };
 

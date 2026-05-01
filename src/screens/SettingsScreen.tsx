@@ -5,6 +5,7 @@ import {
 } from 'react-native';
 import type { SettingsScreenProps } from '../types/navigation';
 import showPlatformAlert from '../components/PlatformAlert';
+import { palette as C } from '../theme/colors';
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -20,19 +21,6 @@ interface InfoRow {
 }
 
 // ── Constants ─────────────────────────────────────────────────────────────────
-
-const C = {
-  bg:        '#07090f',
-  surface:   '#0e1420',
-  surfaceHi: '#151d2e',
-  border:    '#1e2d45',
-  cyan:      '#06b6d4',
-  white:     '#f0f6ff',
-  muted:     '#64748b',
-  red:       '#ef4444',
-  redDim:    '#1c0a0a',
-  green:     '#34d399',
-} as const;
 
 const TOGGLES: ToggleItem[] = [
   { key: 'notifications', label: 'Push Notifications', desc: 'Receive alerts for important updates' },

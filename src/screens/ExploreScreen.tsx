@@ -6,6 +6,8 @@ import {
 import type { ExploreScreenProps } from '../types/navigation';
 import showPlatformAlert from '../components/PlatformAlert';
 import { APP_LINK_SCHEME, WEB_BASE_URL } from '../config/linking';
+import { palette as C } from '../theme/colors';
+import { CONTENT_WIDE } from '../theme/breakpoints';
 
 interface ExploreItem {
   id: string;
@@ -13,16 +15,6 @@ interface ExploreItem {
   title: string;
   subtitle: string;
 }
-
-const C = {
-  bg:        '#07090f',
-  surface:   '#0e1420',
-  surfaceHi: '#151d2e',
-  border:    '#1e2d45',
-  cyan:      '#06b6d4',
-  white:     '#f0f6ff',
-  muted:     '#64748b',
-} as const;
 
 const ITEMS: ExploreItem[] = [
   {
@@ -39,7 +31,7 @@ const ITEMS: ExploreItem[] = [
 
 const ExploreScreen: React.FC<ExploreScreenProps> = () => {
   const { width } = useWindowDimensions();
-  const isWide = width >= 640;
+  const isWide = width >= CONTENT_WIDE;
 
   return (
     <ScrollView style={styles.scroll} contentContainerStyle={styles.scrollContent}>

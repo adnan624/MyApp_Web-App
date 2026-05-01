@@ -4,20 +4,12 @@ import {
   useWindowDimensions, Platform,
 } from 'react-native';
 import type { ProfileScreenProps } from '../types/navigation';
-
-const C = {
-  bg:        '#07090f',
-  surface:   '#0e1420',
-  surfaceHi: '#151d2e',
-  border:    '#1e2d45',
-  cyan:      '#06b6d4',
-  white:     '#f0f6ff',
-  muted:     '#64748b',
-} as const;
+import { palette as C } from '../theme/colors';
+import { CONTENT_WIDE } from '../theme/breakpoints';
 
 const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
   const { width } = useWindowDimensions();
-  const isWide = width >= 640;
+  const isWide = width >= CONTENT_WIDE;
 
   return (
     <ScrollView style={styles.scroll} contentContainerStyle={styles.scrollContent}>

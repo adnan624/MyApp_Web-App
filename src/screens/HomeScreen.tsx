@@ -3,7 +3,9 @@ import {
   View, Text, Image, StyleSheet, TouchableOpacity,
   Platform, ScrollView, useWindowDimensions,
 } from 'react-native';
-import type { HomeScreenProps } from '../types/navigation';
+import type { HomeScreenProps, RootStackParamList } from '../types/navigation';
+import { palette as C } from '../theme/colors';
+import { LAYOUT_DESKTOP, LAYOUT_TABLET } from '../theme/breakpoints';
 
 // ── Types ────────────────────────────────────────────────────────────────────
 
@@ -27,10 +29,25 @@ interface TechItem {
 
 // ── Component ────────────────────────────────────────────────────────────────
 
+const HERO_QUICK_LINKS: { screen: keyof RootStackParamList; label: string }[] = [
+  { screen: 'Explore', label: 'Explore' },
+  { screen: 'Profile', label: 'Profile' },
+  { screen: 'About', label: 'About' },
+];
+
+function getPlatformEmoji(): string {
+  switch (Platform.OS) {
+    case 'ios': return '🍎';
+    case 'android': return '🤖';
+    case 'web': return '🌐';
+    default: return '📱';
+  }
+}
+
 const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
   const { width } = useWindowDimensions();
-  const isWide: boolean = width >= 768;
-  const isDesktop: boolean = width >= 1100;
+  const isWide = width >= LAYOUT_TABLET;
+  const isDesktop = width >= LAYOUT_DESKTOP;
 
   return (
     <ScrollView style={styles.scroll} contentContainerStyle={styles.scrollContent}>
@@ -59,7 +76,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
               </TouchableOpacity>
               <View style={styles.platformPill}>
                 <Text style={styles.platformPillText}>
-                  {PLATFORM_EMOJI[Platform.OS as PlatformKey]}  {Platform.OS}
+                  {getPlatformEmoji()}  {Platform.OS}
                 </Text>
               </View>
               <TouchableOpacity
@@ -71,27 +88,16 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
               </TouchableOpacity>
             </View>
             <View style={styles.secondaryActions}>
-              <TouchableOpacity
-                style={styles.secondaryBtn}
-                onPress={() => navigation.navigate('Explore')}
-                activeOpacity={0.85}
-              >
-                <Text style={styles.secondaryBtnText}>Explore</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.secondaryBtn}
-                onPress={() => navigation.navigate('Profile')}
-                activeOpacity={0.85}
-              >
-                <Text style={styles.secondaryBtnText}>Profile</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.secondaryBtn}
-                onPress={() => navigation.navigate('About')}
-                activeOpacity={0.85}
-              >
-                <Text style={styles.secondaryBtnText}>About</Text>
-              </TouchableOpacity>
+              {HERO_QUICK_LINKS.map(({ screen, label }) => (
+                <TouchableOpacity
+                  key={screen}
+                  style={styles.secondaryBtn}
+                  onPress={() => navigation.navigate(screen)}
+                  activeOpacity={0.85}
+                >
+                  <Text style={styles.secondaryBtnText}>{label}</Text>
+                </TouchableOpacity>
+              ))}
             </View>
           </View>
 
@@ -115,7 +121,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
       <View style={styles.statsRow}>
         {STATS.map((s: StatItem, i: number) => (
           <View
-            key={i}
+            key={s.label}
             style={[styles.statItem, i < STATS.length - 1 && styles.statItemBorder]}
           >
             <Text style={styles.statNum}>{s.num}</Text>
@@ -154,7 +160,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
             </Text>
           </View>
           <Text style={styles.platformBigEmoji}>
-            {PLATFORM_EMOJI[Platform.OS as PlatformKey]}
+            {getPlatformEmoji()}
           </Text>
         </View>
       </View>
@@ -224,25 +230,7 @@ const TECH: TechItem[] = [
   { icon: '🔧', name: 'Babel',        ver: '7'    },
 ];
 
-type PlatformKey = 'ios' | 'android' | 'web';
-
-const PLATFORM_EMOJI: Record<PlatformKey, string> = {
-  ios: '🍎',
-  android: '🤖',
-  web: '🌐',
-};
-
 // ── Styles ────────────────────────────────────────────────────────────────────
-
-const C = {
-  bg:        '#07090f',
-  surface:   '#0e1420',
-  surfaceHi: '#151d2e',
-  border:    '#1e2d45',
-  cyan:      '#06b6d4',
-  white:     '#f0f6ff',
-  muted:     '#64748b',
-} as const;
 
 const styles = StyleSheet.create({
   scroll:        { flex: 1, backgroundColor: C.bg },
