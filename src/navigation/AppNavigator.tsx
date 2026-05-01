@@ -1,13 +1,14 @@
 import React from 'react';
 import { Platform, StatusBar } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { NavigationContainer, LinkingOptions } from '@react-navigation/native';
+import { createNativeStackNavigator, NativeStackNavigationOptions } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../types/navigation';
 import HomeScreen from '../screens/HomeScreen';
 import FormScreen from '../screens/FormScreen';
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
-const linking = {
+const linking: LinkingOptions<RootStackParamList> = {
   prefixes: ['myapp://', 'http://localhost:3000'],
   config: {
     screens: {
@@ -17,7 +18,7 @@ const linking = {
   },
 };
 
-const screenOptions = {
+const screenOptions: NativeStackNavigationOptions = {
   headerStyle: { backgroundColor: '#0f172a' },
   headerTintColor: '#f1f5f9',
   headerTitleStyle: { fontWeight: '700', fontSize: 18 },
@@ -25,7 +26,7 @@ const screenOptions = {
   contentStyle: { backgroundColor: '#f8fafc' },
 };
 
-export default function AppNavigator() {
+const AppNavigator: React.FC = () => {
   return (
     <>
       {Platform.OS === 'android' && (
@@ -47,4 +48,6 @@ export default function AppNavigator() {
       </NavigationContainer>
     </>
   );
-}
+};
+
+export default AppNavigator;

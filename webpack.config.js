@@ -14,9 +14,10 @@ module.exports = {
   },
 
   resolve: {
+    // .web.tsx/.web.ts must come first so platform files resolve correctly
     extensions: [
-      '.web.js', '.web.jsx', '.web.ts', '.web.tsx',
-      '.js', '.jsx', '.ts', '.tsx', '.json',
+      '.web.tsx', '.web.ts', '.web.js', '.web.jsx',
+      '.tsx', '.ts', '.js', '.jsx', '.json',
     ],
     alias: {
       'react-native$': 'react-native-web',
@@ -25,24 +26,21 @@ module.exports = {
 
   module: {
     rules: [
-      // react-navigation ESM files import without .js extensions
-      // (e.g. './useBackButton' instead of './useBackButton.js').
-      // Webpack 5 strict ESM requires extensions — this disables that.
+      // Disable strict ESM fully-specified requirement for node_modules
+      // Fixes: "Can't resolve './useBackButton'" in @react-navigation
       {
         test: /\.js$/,
         resolve: { fullySpecified: false },
       },
+      // Transpile our source + react-native-web through babel+typescript
+      // Do NOT include @react-navigation/* — they ship pre-compiled ESM
+      // that webpack handles natively. Running babel over them causes
+      // the `exports is not defined` crash.
       {
         test: /\.(js|jsx|ts|tsx)$/,
-        // ONLY our source code and react-native-web go through babel.
-        //
-        // @react-navigation, react-native-screens, and
-        // react-native-safe-area-context ship pre-compiled ESM.
-        // Putting them through babel converts export→exports (CJS),
-        // but webpack 5 already classified them as ESM where `exports`
-        // is undefined → crash. Webpack handles their ESM natively.
         include: [
           path.resolve(appDirectory, 'index.web.js'),
+          path.resolve(appDirectory, 'App.tsx'),
           path.resolve(appDirectory, 'App.js'),
           path.resolve(appDirectory, 'src'),
           path.resolve(appDirectory, 'node_modules/react-native-web'),
@@ -52,8 +50,9 @@ module.exports = {
           options: {
             cacheDirectory: false,
             presets: [
-              ['@babel/preset-env', { modules: false }],
+              ['@babel/preset-env', { modules: false, targets: 'defaults, not ie 11' }],
               ['@babel/preset-react', { runtime: 'classic' }],
+              '@babel/preset-typescript',
             ],
             plugins: [
               'react-native-web',
